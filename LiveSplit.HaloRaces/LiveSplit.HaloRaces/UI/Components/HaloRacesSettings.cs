@@ -14,6 +14,22 @@ namespace LiveSplit.HaloRaces.UI.Components
 {
     public partial class HaloRacesSettings : UserControl
     {
+        public List<string> Halo1Levels = new List<string>()
+        {
+            "Pillar of Autumn",
+            "Halo",
+            "Truth and Reconciliation",
+            "Silent Cartographer",
+            "Assault on the Control Room",
+            "343 Guilty Spark",
+            "Library",
+            "Two Betrayals",
+            "Keyes",
+            "Maw"
+        };
+
+        public List<string> CurrentSplits = new List<string>();
+
         public LayoutMode Mode { get; set; }
 
         public HaloRacesSettings()
@@ -22,6 +38,9 @@ namespace LiveSplit.HaloRaces.UI.Components
         }
 
         public bool RaceActive => cbRaceActive.Checked;
+        public string RaceName => cbRace.SelectedItem.ToString();
+        public string RaceMode => cbRaceMode.SelectedItem.ToString();
+        public int PlayerCount => (int)numericUpDown1.Value;
 
         public void SetSettings(XmlNode node)
         {
@@ -61,6 +80,41 @@ namespace LiveSplit.HaloRaces.UI.Components
         private void linkHaloRunsRaceKey_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://haloruns.com");
+        }
+
+        private void HaloRacesSettings_Load(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            foreach (var level in Halo1Levels)
+            {
+                listBox1.Items.Add(level);
+            }
+
+            comboBox1.Items.Clear();
+            foreach (var split in CurrentSplits)
+            {
+                comboBox1.Items.Add(split);
+            }
+
+            cbRaceMode.SelectedIndex = 0;
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox1.SelectedIndex = -1;
+        }
+
+        private void cbRaceActive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbRaceActive.Checked)
+            {
+                
+            }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
